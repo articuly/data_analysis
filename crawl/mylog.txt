@@ -1,5 +1,0 @@
-[app CRITICAL] 13072 file:D:/Programing/python_projects/data_analysis/debug/02.log_demo.py on 6, 这是关键的错误 at 2020-06-06 22:14:48,646
-[app ERROR] 13072 file:D:/Programing/python_projects/data_analysis/debug/02.log_demo.py on 7, 这是错误 at 2020-06-06 22:14:48,646
-[app WARNING] 13072 file:D:/Programing/python_projects/data_analysis/debug/02.log_demo.py on 8, 这是警告 at 2020-06-06 22:14:48,646
-[app INFO] 13072 file:D:/Programing/python_projects/data_analysis/debug/02.log_demo.py on 9, 这是通知信息 at 2020-06-06 22:14:48,646
-[app WARNING] 13072 file:D:/Programing/python_projects/data_analysis/debug/02.log_demo.py on 11, warning... at 2020-06-06 22:14:48,646
