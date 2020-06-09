@@ -61,7 +61,7 @@ def extractInfo(page):
 def saveInfo(info_list):
     for info in info_list:
         try:
-            csv_writer.writerows([info])
+            csv_writer.writerow([info])
         except Exception as e:
             my_logger.error(e)
 
