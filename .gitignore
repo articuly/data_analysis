@@ -150,3 +150,4 @@ cython_debug/
 /.idea/
 /crawl/my_job.csv
 /crawl/my_jobs.csv
+/crawl/mylog.txt
