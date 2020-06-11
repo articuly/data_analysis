@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for a51job project
+# Scrapy settings for baidu project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,13 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'a51job'
+BOT_NAME = 'baidu'
 
-SPIDER_MODULES = ['a51job.spiders']
-NEWSPIDER_MODULE = 'a51job.spiders'
-
+SPIDER_MODULES = ['baidu.spiders']
+NEWSPIDER_MODULE = 'baidu.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'a51job (+http://www.yourdomain.com)'
+# USER_AGENT = 'baidu (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -42,32 +41,34 @@ ROBOTSTXT_OBEY = False
 # DEFAULT_REQUEST_HEADERS = {
 #   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 #   'Accept-Language': 'en',
-#}
+# }
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    'a51job.middlewares.A51JobSpiderMiddleware': 543,
-#}
+#    'baidu.middlewares.BaiduSpiderMiddleware': 543,
+# }
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 # DOWNLOADER_MIDDLEWARES = {
-#    'a51job.middlewares.A51JobDownloaderMiddleware': 543,
-#}
+#    'baidu.middlewares.BaiduDownloaderMiddleware': 543,
+# }
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
 # EXTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
-#}
+# }
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'a51job.pipelines.A51JobPipeline': 300,
-    'a51job.pipelines.TimePipeline': 400,
+    'baidu.pipelines.BaiduPipeline': 300,
+    'baidu.pipelines.DownloadImagesPipeline': 200,
 }
+# 启用下载需要设定保存路径
+IMAGES_STORE = 'download'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -88,4 +89,4 @@ ITEM_PIPELINES = {
 # HTTPCACHE_EXPIRATION_SECS = 0
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
-#HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+# HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'

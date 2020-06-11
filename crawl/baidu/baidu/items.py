@@ -8,11 +8,8 @@
 import scrapy
 
 
-class A51JobItem(scrapy.Item):
+class BaiduItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    job_name = scrapy.Field()
-    job_money = scrapy.Field()
-    job_info = scrapy.Field()
-    job_require = scrapy.Field()
-    update = scrapy.Field()
+    urls = scrapy.Field()
+    images = scrapy.Field()

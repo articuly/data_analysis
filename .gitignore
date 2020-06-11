@@ -151,3 +151,5 @@ cython_debug/
 /crawl/my_job.csv
 /crawl/my_jobs.csv
 /crawl/mylog.txt
+/crawl/a51job/myjobs.csv
+/crawl/baidu/download/
