@@ -6,7 +6,7 @@ from debug.my_logging import create_logger
 import csv
 
 my_logger = create_logger(__name__)
-csv_writer = csv.writer(open('my_job.csv', 'a', encoding='utf-8'))
+csv_writer = csv.writer(open('job_name.csv', 'a', encoding='utf-8'))
 
 # 页面抓取开始
 start_url = 'https://search.51job.com/list/030200,000000,0000,00,9,99,python,2,1.html?lang=c&stype=&postchannel=0000' \

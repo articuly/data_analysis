@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--script标签可以加载任意站点的代码-->
+<script
+        src="https://code.jquery.com/jquery-3.5.0.min.js"
+        integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+        crossorigin="anonymous"></script>
+
+<script>
+    /***
+     //jQuery的jsonp调用方法
+     url = ""
+     $.ajax({
+        type:"get",
+        dataType:"jsonp",// 指明是jsonp调用
+        jsonp:"回调参数名, 默认callback",
+        jsonpCallback: "回调函数名,比如show",
+
+    })
+     // 对于jsonp调用， jQuery会创建一个script标签，然后设置其src属性，实现jsonp调用
+     ***/
+
+
+    url = "https://p.3.cn/prices/mgets?type=1&skuIds=J_8748165,J_100008793532,J_100005578792,J_100009149836,J_100005855324,J_100004061926&_=1587889274792"
+    $.ajax({
+        url: url,
+        type: "get",
+        dataType: "jsonp",
+        beforeSend: function (request) {
+            request.setRequestHeader('Host', 'p.3.cn');
+            request.setRequestHeader('Referer', 'https://caidian.jd.com/')
+        },
+        jsonp: "callback",
+        jsonpCallback: "showme"
+
+    })
+
+    function showme(data) {
+        for (i in data) {
+            for (j in data[i]) {
+                console.log(data[i][j])
+
+            }
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function show_message(message) {
+        alert(message.status)
+        alert(message.data)
+    }
+
+    show_message({"status": "ok", "data": "hellow world"})
+</script>
+<script src="http://127.0.0.1:5002/test_jsonp?callback=show_message"></script>
+</body>
+</html>
