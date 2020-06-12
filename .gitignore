@@ -155,3 +155,4 @@ cython_debug/
 /crawl/baidu/download/
 /crawl/baidu/download/full/
 *.jpg
+/crawl/taobao_selenium/taobao_goods.csv

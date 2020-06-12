@@ -3,12 +3,13 @@
 # datetime: 2020/6/12 15:08
 # software: PyCharm
 
-import time, random
+import time, random, csv
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import Options, WebDriver
 from selenium.webdriver import ActionChains
 
 # 创建实例
+csv_writer = csv.writer(open('taobao_goods.csv', 'a', encoding='utf-8'))
 options = Options()
 options.add_experimental_option('excludeSwitches', ['enable-automation'])
 browser = WebDriver(r'D:\Browser\Chromium\chromedriver.exe', options=options)
@@ -22,13 +23,13 @@ browser.implicitly_wait(30)
 
 
 class TaobaoSpider:
-    def __init__(self, driver):
+    def __init__(self, driver, page):
         """
         初始化驱动
         """
         self.driver = driver
         self.action = ActionChains(self.driver)
-        self.count = 10
+        self.count = page
 
     def search_action(self):
         """
@@ -70,8 +71,8 @@ class TaobaoSpider:
         except Exception as e:
             print('can not access login area', e)
         else:
-            user_input.send_keys('abc')
-            password_input.send_keys('12356')
+            user_input.send_keys('user')
+            password_input.send_keys('123456')
 
         try:
             block_area = self.driver.find_element_by_id('nocaptcha-password')
@@ -92,7 +93,7 @@ class TaobaoSpider:
 
             try:
                 print('get login btn')
-                login_btn = self.driver.find_element_by_css_selector('.fm-btm>button')
+                login_btn = self.driver.find_element_by_css_selector('.fm-btn>button')
             except Exception as e:
                 print('can not get login btn', e)
             else:
@@ -122,33 +123,33 @@ class TaobaoSpider:
         self.wait_until(60, 0.5, self.check_goods_area)
         goods_area = self.driver.find_element_by_id('mainsrp-itemlist')
         title_eles = goods_area.find_elements_by_xpath(
-            "//div[@class='item']/a/div[@class='info']/span[@class='title']")
+            "//div[@class='row row-2 title']/a")
         price_eles = goods_area.find_elements_by_xpath(
-            "//div[@class='item']/a/div[@class='info']/p[@class='price']/span/strong")
+            "//div[@class='row row-1 g-clearfix']/div/strong")
         seller_eles = goods_area.find_elements_by_xpath(
-            "//div[@class='item']/a/div[@class='info']/p/span[@class='shopNick']")
+            "//div[@class='row row-3 g-clearfix']/div/a/span[2]")
         bougnt_eles = goods_area.find_elements_by_xpath(
-            "//div[@class='item']/a/div[@class='info']/p/span[@class='payNum']")
-        dsr_truth_eles = goods_area.find_elements_by_xpath(
-            "//div[@class='item']/a/div[@class='info']/div[@class='moreInfo']/div/span/span[@class='dsr-info-num']")
-        dsr_service_eles = goods_area.find_elements_by_xpath(
-            "//div[@class='item']/a/div[@class='info']/div[@class='moreInfo']/div/ul/li[2]/span/b")
-        dsr_speed_eles = goods_area.find_elements_by_xpath(
-            "//div[@class='item']/a/div[@class='info']/div[@class='moreInfo']/div/ul/li[3]/span/b")
+            "//div[@class='row row-1 g-clearfix']/div[2]")
+        location_eles = goods_area.find_elements_by_xpath(
+            "//div[@class='row row-3 g-clearfix']/div[2]")
 
         for i, title_ele in enumerate(title_eles):
             try:
                 print(
-                    title_ele.text,
+                    title_ele.text.strip(),
                     price_eles[i].text,
                     seller_eles[i].text,
                     bougnt_eles[i].text,
-                    dsr_truth_eles[i].text,
-                    dsr_service_eles[i].get_attribute('innerHTML'),
-                    dsr_speed_eles[i].get_attribute('innerHTML')
+                    location_eles[i].text,
                 )
             except Exception as e:
                 print(e)
+            else:
+                csv_writer.writerow([title_ele.text.strip(),
+                                     price_eles[i].text,
+                                     seller_eles[i].text,
+                                     bougnt_eles[i].text,
+                                     location_eles[i].text])
         self.click_next()
 
     def check_goods_area(self):
@@ -184,5 +185,5 @@ class TaobaoSpider:
         self.get_info()
 
 
-taobao_spider = TaobaoSpider(browser)
+taobao_spider = TaobaoSpider(browser, 3)
 taobao_spider.runspider()
