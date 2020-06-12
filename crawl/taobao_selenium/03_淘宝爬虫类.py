@@ -65,9 +65,18 @@ class TaobaoSpider:
         登陆页面
         """
         try:
-            user_input = self.driver.find_element_by_id('nocaptcha-password')
+            user_input = self.driver.find_element_by_id('fm-login-id')
+            password_input = self.driver.find_element_by_id('fm-login-password')
         except Exception as e:
-            print('can not access the area', e)
+            print('can not access login area', e)
+        else:
+            user_input.send_keys('abc')
+            password_input.send_keys('12356')
+
+        try:
+            block_area = self.driver.find_element_by_id('nocaptcha-password')
+        except Exception as e:
+            print('can not access block area', e)
         else:
             try:
                 block_btn = self.driver.find_element_by_id('nc_1_n1z')
