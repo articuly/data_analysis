@@ -156,3 +156,4 @@ cython_debug/
 /crawl/baidu/download/full/
 *.jpg
 /crawl/taobao_selenium/taobao_goods.csv
+/crawl/taobao_selenium/cookie.txt

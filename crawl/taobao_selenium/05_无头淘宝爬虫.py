@@ -1,6 +1,6 @@
 # coding:utf-8
 # author: Articuly
-# datetime: 2020/6/12 17:24
+# datetime: 2020/6/12 17:54
 # software: PyCharm
 
 import time, random
@@ -10,6 +10,9 @@ from selenium.webdriver.chrome.webdriver import Options, WebDriver
 
 # 创建实例
 options = Options()
+# 开启无头模式
+options.headless = True
+options.add_argument('window-size=1550x838')
 options.add_experimental_option('excludeSwitches', ['enable-automation'])
 browser = WebDriver(r'D:\Browser\Chromium\chromedriver.exe', options=options)
 
@@ -17,8 +20,27 @@ browser = WebDriver(r'D:\Browser\Chromium\chromedriver.exe', options=options)
 browser.get('https://www.taobao.com')
 # 将浏览器最大化显示
 browser.maximize_window()
+print('windows', browser.get_window_size())
 # 隐性等待页面加载完成，如果一个元素获取不到，会等待30s
 browser.implicitly_wait(30)
+
+try:
+    with open('cookie.txt', 'rb') as f:
+        cookies = pickle.load(f)
+except Exception as e:
+    print(e)
+else:
+    for cookie in cookies:
+        try:
+            browser.add_cookie(cookie)
+        except Exception as e:
+            print(cookie)
+    browser.refresh()
+
+print("*" * 100)
+print(browser.get_cookies())
+print(len(browser.get_cookies()))
+print("*" * 100)
 
 
 class TaobaoSpider:
@@ -26,12 +48,8 @@ class TaobaoSpider:
         self.driver = driver
 
     def search_action(self):
-        input_ = input('please enter keyword:')
-        # 登陆之前的cookies
-        print('*' * 100)
-        print(self.driver.get_cookies())
-        print(len(self.driver.get_cookies()))
-        print('*' * 100)
+        input_ = '树莓派'
+
         try:
             q = self.driver.find_element_by_id('q')
         except Exception as e:
@@ -40,6 +58,7 @@ class TaobaoSpider:
             q.send_keys(input_)
 
         try:
+            time.sleep(10)
             search_btn = self.driver.find_element_by_class_name('btn-search')
         except Exception as e:
             print(e)
@@ -53,12 +72,6 @@ class TaobaoSpider:
             print(e)
         else:
             login_btn.click()
-        # 页面登陆跳转需要时间，不能在点击之后立即记录cookie
-        # 这里记录的未必是登陆之后的cookie
-        print("-" * 100)
-        print(browser.get_cookies())
-        print(len(browser.get_cookies()))
-        print("-" * 100)
 
     def click_next(self):
         """
@@ -80,6 +93,7 @@ class TaobaoSpider:
         except Exception as e:
             print(e)
         else:
+            self.flush_cookie()
             title_eles = goods_area.find_elements_by_xpath(
                 "//div[@class='row row-2 title']/a")
             price_eles = goods_area.find_elements_by_xpath(
@@ -100,13 +114,11 @@ class TaobaoSpider:
                 location_eles[i].text,
             )
 
+    def flush_cookie(self):
         cookies = self.driver.get_cookies()
-        print('*' * 100)
-        print(cookies)
-        print(len(cookies))
-        print('*' * 100)
         with open('cookie.txt', 'wb') as f:
             pickle.dump(cookies, f)
+        print('cookies updated')
 
     def run_spider(self):
         self.search_action()
@@ -117,11 +129,3 @@ class TaobaoSpider:
 
 taobao_spider = TaobaoSpider(browser)
 taobao_spider.run_spider()
-
-# ###############################
-# cookie使用方法
-# 1：get_cookies() ,获取cookie信息
-# 2：get_cookie(name),即获取key的信息
-# 3：add_cookie(cookie_dict),添加cookie信息,cook_dict 指的是name 和 Value
-# 4：delete_cookie(name):根据cookie name删除cookie
-# 5：delete_all_cookies():删除cookie信息
