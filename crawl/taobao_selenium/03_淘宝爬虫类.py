@@ -29,7 +29,7 @@ class TaobaoSpider:
         """
         self.driver = driver
         self.action = ActionChains(self.driver)
-        self.count = page
+        self.count = page - 1  # 获取到第10页只需要点9次下一页
 
     def search_action(self):
         """
